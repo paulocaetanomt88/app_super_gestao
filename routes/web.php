@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 
 // Site
-use App\Http\Controllers\PrincipalController;
-use App\Http\Controllers\ContatoController;
-use App\Http\Controllers\SobreNosController;
+use App\Http\Controllers\Site\PrincipalController;
+use App\Http\Controllers\Site\ContatoController;
+use App\Http\Controllers\Site\SobreNosController;
 
 // App
-use App\Http\Controllers\FornecedorController;
-use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\App\FornecedorController;
+use App\Http\Controllers\App\ProdutoController;
+use App\Http\Controllers\App\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
