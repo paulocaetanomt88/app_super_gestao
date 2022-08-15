@@ -16,23 +16,47 @@
     @endif
 --}}
 
-@foreach ($fornecedores as $fornecedor)
-    Fornecedor: {{ $fornecedor['nome'] }} <br />
-    Status: {{ $fornecedor['status'] }} -
-    @if ($fornecedor['status'] == 'S')
-            ativo
-    @elseif ($fornecedor['status'] == 'N')
-            inativo
-    @endif
-    <br />
-    @isset($fornecedor['cnpj'])
-        CNPJ: {{ $fornecedor['cnpj'] }}
-        @empty($fornecedor['cnpj'])
-            - vazio
-        @endempty
-    @endisset
-    <br /><br />
-@endforeach
+@isset($fornecedores)
+
+    @forelse ($fornecedores as $fornecedor)
+        Fornecedor: {{ $fornecedor['nome'] }} <br />
+        Status: {{ $fornecedor['status'] }} -
+        @if ($fornecedor['status'] == 'S')
+                ativo
+        @elseif ($fornecedor['status'] == 'N')
+                inativo
+        @endif
+        <br />
+        CNPJ: {{ $fornecedor['cnpj'] ?? 'Dado não foi preenchido' }}
+        <br />
+        Telefone: ({{ $fornecedor['ddd'] ?? '' }}) {{ $fornecedor['telefone'] ?? ''}}
+        <br />
+        @switch($fornecedor['ddd'])
+            @case('65')
+                Cuiabá - MT
+                @break
+            @case('11')
+                São Paulo - SP
+                @break
+            @case('21')
+                Rio de Janeiro - RJ
+                @break
+            @default
+        @endswitch
+        <br />
+        @if($loop->first)
+            Primeira interação do loop <br />
+        @elseif ($loop->last)
+            Última interação do loop <br /><br />
+            Total de registros: {{$loop->count}}
+        @endif
+
+        <br />
+        @empty
+            Não existem fornecedores cadastrados.
+    @endforelse
+
+@endisset
 
 {{--
     Comando
