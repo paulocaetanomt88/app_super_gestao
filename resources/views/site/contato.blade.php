@@ -113,7 +113,7 @@
             .conteudo-destaque {
                 width: 100%;
                 height: 100%;
-                min-height: 800px; 
+                min-height: 800px;
             }
 
             .esquerda {
@@ -240,7 +240,7 @@
                         <button type="submit" class="borda-preta">ENVIAR</button>
                     </form>
                 </div>
-            </div>  
+            </div>
         </div>
 
         <div class="rodape">

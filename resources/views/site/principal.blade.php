@@ -113,7 +113,7 @@
             .conteudo-destaque {
                 width: 100%;
                 height: 100%;
-                min-height: 800px; 
+                min-height: 800px;
             }
 
             .esquerda {
@@ -215,7 +215,7 @@
         </div>
 
         <div class="conteudo-destaque">
-        
+
             <div class="esquerda">
                 <div class="informacoes">
                     <h1>Sistema Super Gestão</h1>

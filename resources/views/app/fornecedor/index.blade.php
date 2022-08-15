@@ -1,4 +1,4 @@
-<h3>Fornecedores </h3>
+<h3>Fornecedores</h3>
 
 {{-- Este é um comentário que é usado para documentar uma função, classe, etc e será  descartado pelo blade --}}
 {{--
