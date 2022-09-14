@@ -22,7 +22,7 @@ return new class extends Migration
 
         // adiciona relacionamento com a tabela produtos
         Schema::table('produtos', function (Blueprint $table) {
-            $table->unsignedBigInteger('unidade_id')->before('created_at'); // cria o campo unidade_id na tabela produtos
+            $table->unsignedBigInteger('unidade_id')->after('peso'); // cria o campo unidade_id na tabela produtos
             $table->foreign('unidade_id')->references('id')->on('unidades');
         });
 
