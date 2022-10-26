@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
+
+use App\Models\SiteContato;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(FornecedorSeeder::class);
+        // $this->call(FornecedorSeeder::class);
+        // $this->call(SiteContatoSeeder::class);
+
+        SiteContato::factory(5)->create();
+
+        // \App\Models\Fornecedor::factory(100)->create();
     }
 }
