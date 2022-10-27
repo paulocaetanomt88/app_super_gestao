@@ -10,6 +10,7 @@ use App\Models\SiteContato;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
     /**
      * Seed the application's database.
      *
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(FornecedorSeeder::class);
         // $this->call(SiteContatoSeeder::class);
 
-        SiteContato::factory(5)->create();
+        SiteContato::factory()->create();
 
         // \App\Models\Fornecedor::factory(100)->create();
     }

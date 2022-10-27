@@ -16,21 +16,17 @@ class SiteContatoSeeder extends Seeder
      */
     public function run()
     {
+
         /*
-        // criando a instancia da model
-        $site_contato = new SiteContato();
-
-        // definindo atributos 
-        $site_contato->nome = 'Paulo Caetano';
-        $site_contato->telefone = '(65) 99999-9999';
-        $site_contato->email = 'paulo@gmail.com';
-        $site_contato->motivo_contato = 1;
-        $site_contato->mensagem = 'Testando o SiteContatoSeeder da aula 118';
-
-        // salvando na base de dados
-        $site_contato->save();
+        $contato = new SiteContato();
+        $contato->nome = 'Sistema SG';
+        $contato->telefone = '(11) 99999-8888';
+        $contato->email = 'contato@sg.com.br';
+        $contato->motivo_contato = 1;
+        $contato->mensagem = 'Seja bem-vindo ao sistema Super Gestão';
+        $contato->save();
         */
 
-        SiteContato::factory(SiteContatoFactory::class, 100)->create();
+        SiteContato::factory(5)->create();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\SiteContato;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,9 @@ class SiteContatoFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = SiteContato::class;
+
     public function definition()
     {
         return [
