@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Site;
+
 use App\Http\Controllers\Controller;
+use App\Models\MotivoContato;
 use App\Models\SiteContato;
 use Illuminate\Http\Request;
 
 class ContatoController extends Controller
 {
-    public function contato()
+    public function contato(Request $request)
     {   
-        return view('site.contato', ['titulo'=>'Contato']);
+        $motivo_contatos = MotivoContato::all();
+
+        return view('site.contato', ['titulo'=>'Contato', 'motivo_contatos'=>$motivo_contatos]);
     }
 
     public function salvar(Request $request)
@@ -34,6 +38,7 @@ class ContatoController extends Controller
 
         // debug is on the table:
         //print_r($contato->getAttributes());
+        //dd($request);
 
         // -----------------------------------------------------------------------------------------------------
         // Outra forma mais enxuta
