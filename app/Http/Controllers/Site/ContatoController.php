@@ -18,43 +18,32 @@ class ContatoController extends Controller
 
     public function salvar(Request $request)
     {
-        // Instanciando a model SiteContato
-        // $contato = new SiteContato();
-        
-        /*
-        // preenchendo os atributos manualmente
-        $contato->nome = $request->input('nome');
-        $contato->telefone = $request->input('telefone');
-        $contato->email = $request->input('email');
-        $contato->motivo_contato = $request->input('motivo_contato');
-        $contato->mensagem = $request->input('mensagem'); 
-        */
-
-        // preenchendo automaticamente com o método fill() e recuperando todos os atributos com $request->all()
-        // $contato->fill($request->all());
-
-        // salvando no banco de dados
-        // $contato->save();
-
-        // debug is on the table:
-        //print_r($contato->getAttributes());
-        //dd($request);
-
-        // -----------------------------------------------------------------------------------------------------
-        // Outra forma mais enxuta
-
         // validação dos campos
-        $request->validate([
-            'nome' => 'min:3|max:50', // required está implícito
+        $regras = [
+            'nome' => 'required|min:3|max:50|unique:site_contatos',
             'telefone' => 'required',
-            'email' => 'required',
-            'motivo_contato' => 'required',
+            'email' => 'email',
+            'motivo_contatos_id' => 'required',
             'mensagem' => 'required|max:3000'
-        ]);
+        ];
 
-        // criando e salvando os registros no banco de dados
+        $feedback = [
+            'nome.required' => 'O campo nome é necessário.',
+            'nome.min' => 'O campo nome precisa ter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome precisa ter no máximo 50 caracteres.',
+            'nome.unique' => 'O nome informado já foi utilizado.',
+            'telefone.required' => 'O campo telefone é necessário.',
+            'email.email' => 'Informe um email em formato válido',
+            'motivo_contatos_id.required' => 'O campo motivo de contato é necessário.',
+            'mensagem.required' => 'O campo mensagem é necessário.',
+            'mensagem.max' => 'O campo mensagem deve ter no máximo 3000 caracteres.',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        // criando e salvando o registro no banco de dados
         SiteContato::create($request->all());
 
-        return view('site.contato', ['titulo'=>'Contato']);
+        return redirect()->route('site.index');
     }
 }
