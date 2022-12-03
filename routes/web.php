@@ -42,7 +42,10 @@ Route::post('/contato', [ContatoController::class, 'salvar'])
 Route::get('/login', function(){ return 'login'; })
     ->name('site.home');
 
-Route::prefix('/app')->group(function(){
+Route::
+    // encadeando os middlewares na ordem esquerda -> direita
+    middleware('autenticacao')
+    ->prefix('/app')->group(function(){
         Route::get('/produtos', function(){ return 'produtos'; })->name('app.produtos');
         Route::get('/clientes', function(){ return 'clientes'; })->name('app.clientes');
         Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');

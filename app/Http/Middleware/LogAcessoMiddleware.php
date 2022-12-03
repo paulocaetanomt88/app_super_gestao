@@ -24,9 +24,11 @@ class LogAcessoMiddleware
         //
         
         //dd($request->server->get('REQUEST_URI'));
-        
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $rota = $request->server->get('REQUEST_URI');
+
         // Registrando o logo de acesso no banco de dados
-        LogAcesso::create(['log' => 'IP: '.$_SERVER['REMOTE_ADDR'].' requisitou a rota '.$request->server->get('REQUEST_URI')]);
+        LogAcesso::create(['log' => 'IP: '.$ip.' requisitou a rota '.$rota]);
 
         return $next($request);
         //return Response('Chegamos no middleware e finalizamos aqui.');
