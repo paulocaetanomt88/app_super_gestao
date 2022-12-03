@@ -25,30 +25,24 @@ use App\Http\Middleware\LogAcessoMiddleware;
 */
 
 // Quando a rota '/' for acessada, o middleware LogAcessoMiddleware interceptará o comando antes de acessar a PrincipalController
-Route::middleware(LogAcessoMiddleware::class)
-    ->get('/', [PrincipalController::class, 'principal'])
+Route::get('/', [PrincipalController::class, 'principal'])
     ->name('site.index');
 
-Route::middleware(LogAcessoMiddleware::class)
-    ->get('/principal', [PrincipalController::class, 'principal'])
+Route::get('/principal', [PrincipalController::class, 'principal'])
     ->name('site.principal');
-Route::middleware(LogAcessoMiddleware::class)
-    ->get('/sobre-nos', [SobreNosController::class, 'sobreNos'])
+    
+Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])
     ->name('site.sobrenos');
 
-Route::middleware(LogAcessoMiddleware::class)
-    ->get('/contato', [ContatoController::class, 'contato'])
+Route::get('/contato', [ContatoController::class, 'contato'])
     ->name('site.contato');
-Route::middleware(LogAcessoMiddleware::class)
-    ->post('/contato', [ContatoController::class, 'salvar'])
+Route::post('/contato', [ContatoController::class, 'salvar'])
     ->name('site.contato.salvar');
 
-Route::middleware(LogAcessoMiddleware::class)
-    ->get('/login', function(){ return 'login'; })
+Route::get('/login', function(){ return 'login'; })
     ->name('site.home');
 
-Route::middleware(LogAcessoMiddleware::class)
-    ->prefix('/app')->group(function(){
+Route::prefix('/app')->group(function(){
         Route::get('/produtos', function(){ return 'produtos'; })->name('app.produtos');
         Route::get('/clientes', function(){ return 'clientes'; })->name('app.clientes');
         Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
@@ -56,4 +50,4 @@ Route::middleware(LogAcessoMiddleware::class)
 
 Route::fallback(function() {
         echo "A rota acessada não existe. <a href='".route('site.index')."'>Clique aqui</a> para voltar a página inicial.";
-    })->middleware(LogAcessoMiddleware::class);
+    });
