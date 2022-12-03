@@ -26,7 +26,7 @@ use App\Http\Middleware\LogAcessoMiddleware;
 
 // Quando a rota '/' for acessada, o middleware LogAcessoMiddleware interceptará o comando antes de acessar a PrincipalController
 Route::get('/', [PrincipalController::class, 'principal'])
-    ->name('site.index')->middleware('log.acesso');
+    ->name('site.index');
 
 Route::get('/principal', [PrincipalController::class, 'principal'])
     ->name('site.principal');

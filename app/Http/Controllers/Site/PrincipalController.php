@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class PrincipalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('log.acesso');
+    }
+
     public function principal()
     {
         $motivo_contatos = MotivoContato::all();
