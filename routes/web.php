@@ -42,9 +42,8 @@ Route::post('/contato', [ContatoController::class, 'salvar'])
 Route::get('/login', function(){ return 'login'; })
     ->name('site.home');
 
-Route::
-    // encadeando os middlewares na ordem esquerda -> direita
-    middleware('autenticacao')
+// encadeando os middlewares na ordem esquerda -> direita
+Route::middleware('autenticacao:padrao,visitante,p3,p4')
     ->prefix('/app')->group(function(){
         Route::get('/produtos', function(){ return 'produtos'; })->name('app.produtos');
         Route::get('/clientes', function(){ return 'clientes'; })->name('app.clientes');
