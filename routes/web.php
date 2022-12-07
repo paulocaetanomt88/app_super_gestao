@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\PrincipalController;
 use App\Http\Controllers\Site\ContatoController;
 use App\Http\Controllers\Site\SobreNosController;
+use App\Http\Controllers\Site\LoginController;
 
 // App
 use App\Http\Controllers\App\FornecedorController;
@@ -39,8 +40,10 @@ Route::get('/contato', [ContatoController::class, 'contato'])
 Route::post('/contato', [ContatoController::class, 'salvar'])
     ->name('site.contato.salvar');
 
-Route::get('/login', function(){ return 'login'; })
-    ->name('site.home');
+Route::get('/login', [LoginController::class, 'index'])
+        ->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar'])
+        ->name('site.login');
 
 // encadeando os middlewares na ordem esquerda -> direita
 Route::middleware('autenticacao:padrao,visitante,p3,p4')
