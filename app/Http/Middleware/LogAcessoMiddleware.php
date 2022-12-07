@@ -30,7 +30,13 @@ class LogAcessoMiddleware
         // Registrando o logo de acesso no banco de dados
         LogAcesso::create(['log' => 'IP: '.$ip.' requisitou a rota '.$rota]);
 
-        return $next($request);
+        $resposta = $next($request);
+
+        $resposta->setStatusCode(201, 'O status e o texto da resposta foram modificados');
+
+        dd($resposta);
+
+        //return $next($request);
         //return Response('Chegamos no middleware e finalizamos aqui.');
     }
 }
