@@ -40,7 +40,8 @@ Route::get('/contato', [ContatoController::class, 'contato'])
 Route::post('/contato', [ContatoController::class, 'salvar'])
     ->name('site.contato.salvar');
 
-Route::get('/login', [LoginController::class, 'index'])
+//parâmetro 'erro' se torna opcional com o uso de '?' à direita
+Route::get('/login/{erro?}', [LoginController::class, 'index'])
         ->name('site.login');
 Route::post('/login', [LoginController::class, 'autenticar'])
         ->name('site.login');
