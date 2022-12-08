@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
-
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -60,10 +59,19 @@ class LoginController extends Controller
             $_SESSION['email'] = $usuario->email;
 
             // redirecionando para área restrita
-            return redirect()->route('app.clientes');
+            return redirect()->route('app.home');
         } else {
             // redirecionando para tela de login com mensagem de erro via parâmetro
             return redirect()->route('site.login', ['erro' => 1]);
         }
+    }
+
+    public function sair()
+    {
+        // destruindo a sessão de usuário logado
+        session_destroy();
+
+        // redirecionando para tela de login
+        return redirect()->route('site.login');
     }
 }
