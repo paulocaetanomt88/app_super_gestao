@@ -17,6 +17,8 @@ class LoginController extends Controller
         if ($request->get('erro') == 1)
         {
             $erro = 'Usuário ou senha inválido.';
+        } elseif ($request->get('erro') == 2) {
+            $erro = 'É necessário autenticar-se para acessar a página requisitada.';
         }
 
         return view('site.login', ['titulo' => 'Autenticação de usuário', 'erro' => $erro]);
@@ -43,11 +45,22 @@ class LoginController extends Controller
         // Instanciando a Model User
         $user = new User();
 
+        // verifica se existe um usuário registrado com os dados informados no form. de login
+        // se existir, os atributos deste usuário estarão acessíveis na instância $usuario
         $usuario = $user->where('email', $email)->where('password', $password)->get()->first();
 
+        // verificando se o atributo email existe na instância
         if(isset($usuario->name))
         {
-            echo 'Usuário existe.';
+            // Habilitando o uso da superglobal $_SESSION
+            session_start();
+
+            // Criando variáveis dentro na sessão
+            $_SESSION['nome'] = $usuario->name;
+            $_SESSION['email'] = $usuario->email;
+
+            // redirecionando para área restrita
+            return redirect()->route('app.clientes');
         } else {
             // redirecionando para tela de login com mensagem de erro via parâmetro
             return redirect()->route('site.login', ['erro' => 1]);
