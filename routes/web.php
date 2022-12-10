@@ -54,7 +54,15 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
         Route::get('/produto', [ProdutoController::class, 'index'])->name('app.produto');
         Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
+        
         Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
+        Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+        Route::post('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+        Route::get('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+        Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+        Route::get('/fornecedor/editar/{id}', [FornecedorController::class, 'editar'])->name('app.fornecedor.editar');
+        Route::post('/fornecedor/atualizar', [FornecedorController::class, 'atualizar'])->name('app.fornecedor.atualizar');
+        Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
     });
 
 Route::fallback(function() {
