@@ -24,7 +24,7 @@
                     <input type="text" name="site" placeholder="Site" class="borda-preta" />
                     <input type="text" name="uf" placeholder="UF" class="borda-preta" />
                     <input type="text" name="email" placeholder="E-mail" class="borda-preta" />
-                    <button type="submit" class="borda-preta">Pesquisar</button>
+                    <button type="submit" class="borda-preta bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pesquisar</button>
                 </form>
             </div>
         </div>

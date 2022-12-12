@@ -17,48 +17,39 @@
         </div>
 
         <div class="informacao-pagina">
-            <div style="width: 90%; margin-left: auto; margin-right: auto;">
-                <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>Nome</b>
+            <table class="table-auto self-auto" align="center">
+                <thead>
+                  <tr>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Nome</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Site</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">UF</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">E-mail</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Editar</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Excluir</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-slate-800">
+                    @foreach ($fornecedores as $fornecedor)
+                        <tr>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['nome']; }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">{{ $fornecedor['site']; }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['uf']; }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['email']; }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.editar', ['id' => $fornecedor['id']]) }}">[e]</a></td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.excluir', ['id' => $fornecedor['id']]) }}">[x]</a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+              </table>
+              <br>
+              <div class="row flex justify-center">
+                <div class="col-md-12">
+                    {{ $fornecedores->appends($request)->links('pagination::tailwind') }}
                 </div>
-                <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>Site</b>
-                </div>
-                <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>UF</b>
-                </div>
-                <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>E-mail</b>
-                </div>
-                <div style="width: 10%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>Atualizar</b>
-                </div>
-                <div style="width: 10%; margin-left: auto; margin-right: auto; float: left;">
-                    <b>Excluir</b>
-                </div>
-                @foreach ($fornecedores as $fornecedor)
-                    <div style="clear: left;">
-                        <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                            {{ $fornecedor['nome']; }}
-                        </div>
-                        <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                            {{ $fornecedor['site']; }}
-                        </div>
-                        <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                            {{ $fornecedor['uf']; }}
-                        </div>
-                        <div style="width: 20%; margin-left: auto; margin-right: auto; float: left;">
-                            {{ $fornecedor['email']; }}
-                        </div>
-                        <div style="width: 10%; margin-left: auto; margin-right: auto; float: left;">
-                            <a href="{{ route('app.fornecedor.editar', ['id' => $fornecedor['id']]) }}">[e]</a>
-                        </div>
-                        <div style="width: 10%; margin-left: auto; margin-right: auto; float: left;">
-                            <a href="{{ route('app.fornecedor.excluir', ['id' => $fornecedor['id']]) }}">[x]</a>
-                        </div>
-                    </div>
-                @endforeach
             </div>
-        </div>
+        </div>  
     </div>
+
+    
+    
 @endsection
