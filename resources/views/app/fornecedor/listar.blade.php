@@ -45,6 +45,17 @@
               <div class="row flex justify-center">
                 <div class="col-md-12">
                     {{ $fornecedores->appends($request)->links('pagination::tailwind') }}
+                    <br />
+                    {{-- 
+                    Exibindo {{ $fornecedores->count() }} registros por página.
+                    <br>
+                    Total de registros: {{ $fornecedores->total() }}
+                    <br>
+                    Número do primeiro registro desta página na relação do resultado da busca: {{ $fornecedores->firstItem() }}
+                    <br>
+                    Número do último registro desta página na relação do resultado da busca: {{ $fornecedores->lastItem() }}
+                    --}}
+                    Exibindo {{ $fornecedores->count() }} fornecedores de {{ $fornecedores->total() }} (de {{ $fornecedores->firstItem() }} a {{ $fornecedores->lastItem() }} )
                 </div>
             </div>
         </div>  
