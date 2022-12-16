@@ -63,6 +63,8 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         Route::get('/fornecedor/editar/{id}', [FornecedorController::class, 'editar'])->name('app.fornecedor.editar');
         Route::post('/fornecedor/atualizar', [FornecedorController::class, 'atualizar'])->name('app.fornecedor.atualizar');
         Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
+
+        Route::resource('produto', ProdutoController::class);
     });
 
 Route::fallback(function() {
