@@ -32,7 +32,7 @@
                     <input type="text" name="email" value="{{ old('email') }}" placeholder="E-mail" class="borda-preta" />
                     {{ $errors->has('email') ? $errors->first('email') : '' }}
 
-                    <button type="submit" class="borda-preta">Cadastrar</button>
+                    <button type="submit" class="borda-preta bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cadastrar</button>
                 </form>
                     {{ $msg ?? ''}}
             </div>

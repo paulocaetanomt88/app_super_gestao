@@ -22,13 +22,12 @@ h2 {
     font-size: 22px;
 }
 
-input, select, textarea, button {
+input, select, textarea {
     width: 100%;
     padding: 10px 15px;
     margin: 10px 0px 10px 0px;
     box-sizing: border-box;
     border-radius: 3px;
-    background-color: transparent;
     color: #333;
 }
 
