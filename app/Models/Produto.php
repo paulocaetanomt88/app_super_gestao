@@ -12,4 +12,12 @@ class Produto extends Model
     protected $table = "produtos";
 
     protected $fillable = ['nome', 'descricao', 'peso', 'unidade_id'];
+
+    public function produtoDetalhe() {
+        return $this->hasOne(ProdutoDetalhe::class);
+    }
+
+    public function unidade() {
+        return $this->belongsTo(Unidade::class);
+    }
 }

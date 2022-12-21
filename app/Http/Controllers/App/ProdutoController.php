@@ -24,7 +24,7 @@ class ProdutoController extends Controller
             ->paginate(3); 
         */
 
-        $produtos = Produto::paginate(10);
+        $produtos = Produto::has('produtoDetalhe')->has('unidade')->paginate(10);
         $unidades = Unidade::all();
 
         return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all() ]);
@@ -139,7 +139,9 @@ class ProdutoController extends Controller
         else
             $msg = 'Falha ao atualizar o produto!';
 
-        return redirect()->route('produto.show', ['msg' => $msg, 'produto' => $produto->id]);
+        $unidades = Unidade::all();
+
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'msg' => $msg]);
     }
 
     /**
