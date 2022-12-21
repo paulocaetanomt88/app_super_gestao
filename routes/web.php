@@ -12,6 +12,7 @@ use App\Http\Controllers\Site\LoginController;
 use App\Http\Controllers\App\HomeController;
 use App\Http\Controllers\App\FornecedorController;
 use App\Http\Controllers\App\ProdutoController;
+use App\Http\Controllers\App\ProdutoDetalheController;
 use App\Http\Controllers\App\ClienteController;
 use App\Http\Middleware\LogAcessoMiddleware;
 
@@ -65,6 +66,8 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
 
         Route::resource('/produto', ProdutoController::class);
+
+        Route::resource('/produto-detalhe', ProdutoDetalheController::class);
     });
 
 Route::fallback(function() {
