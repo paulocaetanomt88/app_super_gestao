@@ -41,26 +41,27 @@
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto['peso']; }}</td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto['unidade_id']; }}</td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <a href="{{ route('produto.show', [ 'produto' => $produto->id ]) }}">
-                                    <button class="btn btn-xs btn-info btn-flat show-alert-delete-box btn-sm" data-toggle="tooltip">Ver</button>
+                                <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('produto.show', [ 'produto' => $produto->id ]) }}">
+                                    Ver
                                 </a>
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <form method="POST" action="{{ route('produto.edit', ['produto' => $produto->id]) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-xs btn-secondary btn-flat show-alert-delete-box btn-sm" data-toggle="tooltip">Editar</button>
-                                    {{-- <a href="">[x]</a> --}}
-                                </form>
+                                <a class="btn btn-xs btn-secondary btn-flat  btn-sm" href="{{ route('produto.edit', ['produto' => $produto->id]) }}">
+                                    Editar
+                                </a> 
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <form method="POST" action="{{ route('produto.destroy', ['produto' => $produto->id]) }}">
+                                <form method="POST" id="delete" name="delete" action="{{ route('produto.destroy', ['produto' => $produto->id]) }}">
                                     @csrf
                                     @method('DELETE')
+                                    <input id="funcao" type="hidden" value="DELETE">
                                     <button
                                         type="submit"
+                                        id="delete"
+                                        name="delete"
+                                        value="delete"
                                         class="btn btn-xs btn-danger btn-flat show-alert-delete-box btn-sm" data-toggle="tooltip"
-                                        onclick="document.getElementById('form_{{$produto->id}}').confirm">
+                                        onclick="confirm">
                                         Excluir
                                     </button>
                                     {{-- <a href="">[x]</a> --}}
@@ -98,7 +99,9 @@
         $('.show-alert-delete-box').click(function(event){
             var form =  $(this).closest("form");
             var name = $(this).data("name");
+
             event.preventDefault();
+
             swal({
                 title: "Deseja realmente deletar esse registro?",
                 text: "Se deletar, não será possível recuperar este registro depois.",
