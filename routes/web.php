@@ -65,9 +65,11 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         Route::post('/fornecedor/atualizar', [FornecedorController::class, 'atualizar'])->name('app.fornecedor.atualizar');
         Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
 
-        Route::resource('/produto', ProdutoController::class);
+        // Devido o ProdutoController ter sido criado especificando a --model=Produto, o Laravel definiu o parametro para 'produto'
+        // que ao decorrer do desenvolvimento do projeto do curso foi modificado para 'item'
+        Route::resource('/produto', ProdutoController::class)->parameters(['produto' => 'item']);
 
-        Route::resource('/produto-detalhe', ProdutoDetalheController::class);
+        Route::resource('/produto-detalhe', ProdutoDetalheController::class)->parameters(['produto_detalhe' => 'item_detalhe']);
     });
 
 Route::fallback(function() {

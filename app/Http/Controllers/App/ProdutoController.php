@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Produto;
 use App\Models\Unidade;
 use Illuminate\Http\Request;
@@ -24,10 +25,10 @@ class ProdutoController extends Controller
             ->paginate(3); 
         */
 
-        $produtos = Produto::has('produtoDetalhe')->has('unidade')->paginate(10);
+        $itens = Item::paginate(10);
         $unidades = Unidade::all();
 
-        return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all() ]);
+        return view('app.produto.index', ['itens' => $itens, 'request' => $request->all() ]);
     }
 
     /**
@@ -70,44 +71,44 @@ class ProdutoController extends Controller
 
         $request->validate($regras, $feedback);
 
-        Produto::create($request->all());
+        Item::create($request->all());
         return redirect()->route('produto.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Produto $produto)
+    public function show(Item $item)
     {
-        $unidade = Unidade::findOrFail($produto->unidade_id);
+        $unidade = Unidade::findOrFail($item->unidade_id);
 
-        return view('app.produto.show', ['produto' => $produto, 'unidade' => $unidade]);
+        return view('app.produto.show', ['item' => $item, 'unidade' => $unidade]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produto $produto)
+    public function edit(Item $item)
     {
         $unidades = Unidade::all();
 
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
+        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Produto  $produto
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, Item $item)
     {
         $regras = [
             'nome' => 'required|min:3|max:40',
@@ -129,30 +130,30 @@ class ProdutoController extends Controller
 
         $request->validate($regras, $feedback);
 
-        $produto->nome = $request->input('nome');
-        $produto->descricao = $request->input('descricao');
-        $produto->peso = $request->input('peso');
-        $produto->unidade_id = $request->input('unidade_id');
+        $item->nome = $request->input('nome');
+        $item->descricao = $request->input('descricao');
+        $item->peso = $request->input('peso');
+        $item->unidade_id = $request->input('unidade_id');
 
-        if ($produto->update())
+        if ($item->update())
             $msg = 'Produto atualizado com sucesso!';
         else
             $msg = 'Falha ao atualizar o produto!';
 
         $unidades = Unidade::all();
 
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'msg' => $msg]);
+        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades, 'msg' => $msg]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Produto  $produto
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produto $produto)
+    public function destroy(Item $item)
     {
-        $produto->delete();
+        $item->delete();
         
         return redirect()->back();
     }

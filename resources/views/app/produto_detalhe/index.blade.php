@@ -15,8 +15,8 @@
 
         <div class="menu">
             <ul>
-                <li><a href="{{ route('produto.create') }}">Novo</a></li>
-                <li><a href="{{ route('produto.index') }}">Listar</a></li>
+                <li><a href="{{ route('produto-detalhe.create') }}">Novo</a></li>
+                <li><a href="{{ route('produto-detalhe.index') }}">Listar</a></li>
             </ul>
         </div>
 
@@ -25,9 +25,6 @@
                 <thead>
                   <tr>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Nome</th>
-                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Descrição</th>
-                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Peso</th>
-                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Unidade</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Comprimento</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Largura</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Altura</th>
@@ -37,27 +34,24 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-slate-800">
-                    @foreach ($itens as $item)
+                    @foreach ($itens_detalhes as $item_detalhes)
                         <tr>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $item['nome'] }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">{{ $item['descricao'] }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item['peso'] }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item->unidade->unidade; }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item->itemDetalhe->comprimento ?? '' }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item->itemDetalhe->largura ?? '' }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item->itemDetalhe->altura ?? '' }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->item->nome ?? '' }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->comprimento ?? '' }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->largura ?? '' }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->altura ?? '' }}</td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('produto.show', [ 'item' => $item->id ]) }}">
+                                <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('produto-detalhe.show', [ 'produto_detalhe' => $item_detalhes->id ]) }}">
                                     Ver
                                 </a>
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <a class="btn btn-xs btn-secondary btn-flat  btn-sm" href="{{ route('produto.edit', ['item' => $item->id]) }}">
+                                <a class="btn btn-xs btn-secondary btn-flat  btn-sm" href="{{ route('produto-detalhe.edit', ['produto_detalhe' => $item_detalhes->id]) }}">
                                     Editar
                                 </a> 
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <form method="POST" id="delete" name="delete" action="{{ route('produto.destroy', ['item' => $item->id]) }}">
+                                <form method="POST" id="delete" name="delete" action="{{ route('produto-detalhe.destroy', ['produto_detalhe' => $item_detalhes->id]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input id="funcao" type="hidden" value="DELETE">
@@ -80,7 +74,7 @@
               <br>
               <div class="row flex justify-center">
                 <div class="col-md-12">
-                    {{ $itens->appends($request)->links('pagination::tailwind') }}
+                    {{ $itens_detalhes->appends($request)->links('pagination::tailwind') }}
                     <br />
                     {{-- 
                     Exibindo {{ $fornecedores->count() }} registros por página.
@@ -91,7 +85,7 @@
                     <br>
                     Número do último registro desta página na relação do resultado da busca: {{ $fornecedores->lastItem() }}
                     --}}
-                    Exibindo {{ $itens->count() }} produtos de {{ $itens->total() }} (de {{ $itens->firstItem() }} a {{ $itens->lastItem() }} )
+                    Exibindo {{ $itens_detalhes->count() }} produtos de {{ $itens_detalhes->total() }} (de {{ $itens_detalhes->firstItem() }} a {{ $itens_detalhes->lastItem() }} )
                 </div>
             </div>
         </div>  

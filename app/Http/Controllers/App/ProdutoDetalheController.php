@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
-use App\Models\ProdutoDetalhe;
-use App\Models\Produto;
+use App\Models\ItemDetalhe;
+
 use App\Models\Unidade;
 
 class ProdutoDetalheController extends Controller
@@ -16,9 +17,11 @@ class ProdutoDetalheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $itens_detalhes = ItemDetalhe::paginate(10);
+
+        return view('app.produto_detalhe.index', ['itens_detalhes' => $itens_detalhes, 'request' => $request->all()]);
     }
 
     /**
@@ -41,8 +44,8 @@ class ProdutoDetalheController extends Controller
      */
     public function store(Request $request)
     {
-        ProdutoDetalhe::create($request->all());
-        echo "Cadastro realizado com sucesso.";
+        ItemDetalhe::create($request->all());
+        echo "Detalhes do produto cadastrados com sucesso.";
     }
 
     /**
@@ -51,11 +54,13 @@ class ProdutoDetalheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ProdutoDetalhe $produto_detalhe)
+    public function show($id)
     {
-        $unidade = Unidade::findOrFail($produto_detalhe->unidade_id);
+        $item_detalhe = ItemDetalhe::findOrFail($id);
 
-        return view('app.produto_detalhe.show', ['produto_detalhe' => $produto_detalhe, 'unidade' => $unidade]);
+        $unidade = Unidade::findOrFail($item_detalhe->unidade_id);
+
+        return view('app.produto_detalhe.show', ['item_detalhe' => $item_detalhe, 'unidade' => $unidade]);
     }
 
     /**
@@ -64,11 +69,15 @@ class ProdutoDetalheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProdutoDetalhe $produto_detalhe)
+    public function edit($id)
     {
-        $unidades = Unidade::all();
+    $item_detalhe = ItemDetalhe::findOrFail($id);
 
-        return view('app.produto_detalhe.edit', ['produto_detalhe' => $produto_detalhe, 'unidades' => $unidades]);
+    $item = Item::findOrFail($item_detalhe->produto_id);
+
+    $unidades = Unidade::all();
+
+    return view('app.produto_detalhe.edit', ['item_detalhe' => $item_detalhe, 'item' => $item, 'unidades' => $unidades]);
     }
 
     /**
@@ -78,9 +87,9 @@ class ProdutoDetalheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProdutoDetalhe $produto_detalhe)
+    public function update(Request $request, ItemDetalhe $item_detalhe)
     {
-        if($produto_detalhe->update($request->all())) {
+        if($item_detalhe->update($request->all())) {
             $msg = 'Os detalhes do produto foram atualizados com sucesso!';
         } else {
             $msg = 'Falha ao atualizar detalhes do produto!';
@@ -91,7 +100,7 @@ class ProdutoDetalheController extends Controller
 
         $unidades = Unidade::all();
 
-        return view('app.produto_detalhe.edit', ['produto_detalhe' => $produto_detalhe, 'unidades' => $unidades, 'msg' => $msg]);
+        return view('app.produto_detalhe.edit', ['item_detalhe' => $item_detalhe, 'unidades' => $unidades, 'msg' => $msg]);
     }
 
 
@@ -103,6 +112,10 @@ class ProdutoDetalheController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item_detalhe = ItemDetalhe::findOrFail($id);
+        
+        $item_detalhe->delete();
+        
+        return redirect()->back();
     }
 }

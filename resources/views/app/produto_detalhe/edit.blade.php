@@ -17,9 +17,9 @@
         <div class="informacao-pagina">
             <div style="width: 30%; margin-left: auto; margin-right: auto;">
                 <h4>Produto</h4>
-                <p class="mt-4">Nome: {{ $produto_detalhe->produto->nome }}</p>
-                <p class="mt-4">Descrição: {{ $produto_detalhe->produto->descricao }}</p>
-                @component('app.produto_detalhe._components.form_create_edit', ['produto_detalhe' => $produto_detalhe, 'unidades' => $unidades])
+                <p class="mt-4">Nome: {{ $item_detalhe->item->nome }}</p>
+                <p class="mt-4">Descrição: {{ $item_detalhe->item->descricao }}</p>
+                @component('app.produto_detalhe._components.form_create_edit', ['item_detalhe' => $item_detalhe, 'unidades' => $unidades])
                 @endcomponent
                 <p class="mt-4">{{ $msg ?? ''}}</p>
             </div>

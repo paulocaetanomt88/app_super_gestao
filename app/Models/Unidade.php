@@ -12,6 +12,6 @@ class Unidade extends Model
     protected $fillable = ['unidade', 'descricao'];
 
     public function produto() {
-        return $this->hasMany(Produto::class);
+        return $this->hasMany(Item::class, 'unidade_id', 'id');
     }
 }
