@@ -67,9 +67,14 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
 
         // Devido o ProdutoController ter sido criado especificando a --model=Produto, o Laravel definiu o parametro para 'produto'
         // que ao decorrer do desenvolvimento do projeto do curso foi modificado para 'item'
+        
         Route::resource('/produto', ProdutoController::class)->parameters(['produto' => 'item']);
-
-        Route::resource('/produto-detalhe', ProdutoDetalheController::class)->parameters(['produto_detalhe' => 'item_detalhe']);
+        
+        //Route::resource('/produto-detalhe', ProdutoDetalheController::class)->parameters(['produto_detalhe' => 'item_detalhe']);
+        
+        // Foi necessário desativar a rota /produto-detalhe para usar o parâmetro item_detalhe recebendo o objeto ItemDetalhe $itemDetalhe na ProdutoDetalheController
+        Route::resource('/item-detalhe', ProdutoDetalheController::class);
+        
     });
 
 Route::fallback(function() {

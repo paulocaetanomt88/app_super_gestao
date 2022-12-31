@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\App;
-
 use App\Http\Controllers\Controller;
+
 use App\Models\Item;
-use Illuminate\Http\Request;
-
 use App\Models\ItemDetalhe;
-
 use App\Models\Unidade;
+use Illuminate\Http\Request;
 
 class ProdutoDetalheController extends Controller
 {
@@ -45,51 +43,50 @@ class ProdutoDetalheController extends Controller
     public function store(Request $request)
     {
         ItemDetalhe::create($request->all());
-        echo "Detalhes do produto cadastrados com sucesso.";
+        
+        return redirect()->back()->with('msg', 'Detalhes do produto foram cadastrados!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ItemDetalhe  $itemDetalhe
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ItemDetalhe $itemDetalhe)
     {
-        $item_detalhe = ItemDetalhe::findOrFail($id);
+        //dd($itemDetalhe);
+        
+        $unidade = Unidade::findOrFail($itemDetalhe->unidade_id);
 
-        $unidade = Unidade::findOrFail($item_detalhe->unidade_id);
-
-        return view('app.produto_detalhe.show', ['item_detalhe' => $item_detalhe, 'unidade' => $unidade]);
+        return view('app.produto_detalhe.show', ['item_detalhe' => $itemDetalhe, 'unidade' => $unidade]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ItemDetalhe  $itemDetalhe
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ItemDetalhe $itemDetalhe)
     {
-    $item_detalhe = ItemDetalhe::findOrFail($id);
-
-    $item = Item::findOrFail($item_detalhe->produto_id);
+        $item = Item::findOrFail($itemDetalhe->produto_id);
 
     $unidades = Unidade::all();
 
-    return view('app.produto_detalhe.edit', ['item_detalhe' => $item_detalhe, 'item' => $item, 'unidades' => $unidades]);
+    return view('app.produto_detalhe.edit', ['item_detalhe' => $itemDetalhe, 'item' => $item, 'unidades' => $unidades]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\ItemDetalhe  $itemDetalhe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItemDetalhe $item_detalhe)
+    public function update(Request $request, ItemDetalhe $itemDetalhe)
     {
-        if($item_detalhe->update($request->all())) {
+        if($itemDetalhe->update($request->all())) {
             $msg = 'Os detalhes do produto foram atualizados com sucesso!';
         } else {
             $msg = 'Falha ao atualizar detalhes do produto!';
@@ -100,22 +97,19 @@ class ProdutoDetalheController extends Controller
 
         $unidades = Unidade::all();
 
-        return view('app.produto_detalhe.edit', ['item_detalhe' => $item_detalhe, 'unidades' => $unidades, 'msg' => $msg]);
+        return view('app.produto_detalhe.edit', ['item_detalhe' => $itemDetalhe, 'unidades' => $unidades, 'msg' => $msg]);
     }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\ItemDetalhe  $itemDetalhe
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ItemDetalhe $itemDetalhe)
     {
-        $item_detalhe = ItemDetalhe::findOrFail($id);
+        $itemDetalhe->delete();
         
-        $item_detalhe->delete();
-        
-        return redirect()->back();
+        return redirect()->back()->with('msg', 'Detalhes do produto foram apagados!');
     }
 }

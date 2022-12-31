@@ -15,8 +15,8 @@
 
         <div class="menu">
             <ul>
-                <li><a href="{{ route('produto-detalhe.create') }}">Novo</a></li>
-                <li><a href="{{ route('produto-detalhe.index') }}">Listar</a></li>
+                <li><a href="{{ route('item-detalhe.create') }}">Novo</a></li>
+                <li><a href="{{ route('item-detalhe.index') }}">Listar</a></li>
             </ul>
         </div>
 
@@ -41,17 +41,17 @@
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->largura ?? '' }}</td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $item_detalhes->altura ?? '' }}</td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('produto-detalhe.show', [ 'produto_detalhe' => $item_detalhes->id ]) }}">
+                                <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('item-detalhe.show', [ 'item_detalhe' => $item_detalhes->id ]) }}">
                                     Ver
                                 </a>
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <a class="btn btn-xs btn-secondary btn-flat  btn-sm" href="{{ route('produto-detalhe.edit', ['produto_detalhe' => $item_detalhes->id]) }}">
+                                <a class="btn btn-xs btn-secondary btn-flat  btn-sm" href="{{ route('item-detalhe.edit', ['item_detalhe' => $item_detalhes->id]) }}">
                                     Editar
                                 </a> 
                             </td>
                             <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
-                                <form method="POST" id="delete" name="delete" action="{{ route('produto-detalhe.destroy', ['produto_detalhe' => $item_detalhes->id]) }}">
+                                <form method="POST" id="delete" name="delete" action="{{ route('item-detalhe.destroy', ['item_detalhe' => $item_detalhes->id]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <input id="funcao" type="hidden" value="DELETE">
