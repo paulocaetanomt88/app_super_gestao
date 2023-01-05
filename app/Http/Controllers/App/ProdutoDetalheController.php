@@ -70,11 +70,11 @@ class ProdutoDetalheController extends Controller
      */
     public function edit(ItemDetalhe $itemDetalhe)
     {
-        $item = Item::findOrFail($itemDetalhe->produto_id);
+        $itemDetalhe = ItemDetalhe::with(['item'])->find($itemDetalhe->id);
 
-    $unidades = Unidade::all();
+        $unidades = Unidade::all();
 
-    return view('app.produto_detalhe.edit', ['item_detalhe' => $itemDetalhe, 'item' => $item, 'unidades' => $unidades]);
+        return view('app.produto_detalhe.edit', ['item_detalhe' => $itemDetalhe, 'unidades' => $unidades]);
     }
 
     /**

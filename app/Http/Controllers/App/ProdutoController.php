@@ -25,8 +25,11 @@ class ProdutoController extends Controller
             ->paginate(3); 
         */
 
-        $itens = Item::paginate(10);
-        $unidades = Unidade::all();
+        // Carregamento Lazy Loading 
+        // $itens = Item::paginate(10);
+
+        // Carregamento Eager Loading
+        $itens = Item::with(['itemDetalhe'])->paginate(10);
 
         return view('app.produto.index', ['itens' => $itens, 'request' => $request->all() ]);
     }
