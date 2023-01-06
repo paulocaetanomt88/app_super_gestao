@@ -11,7 +11,7 @@ class Item extends Model
 
     protected $table = "produtos";
 
-    protected $fillable = ['nome', 'descricao', 'peso', 'unidade_id'];
+    protected $fillable = ['fornecedor_id', 'nome', 'descricao', 'peso', 'unidade_id'];
 
     public function itemDetalhe() {
         return $this->hasOne(ItemDetalhe::class, 'produto_id', 'id');
@@ -19,5 +19,9 @@ class Item extends Model
 
     public function unidade() {
         return $this->belongsTo(Unidade::class, 'unidade_id',  'id');
+    }
+
+    public function fornecedor() {
+        return $this->belongsTo(Fornecedor::class, 'fornecedor_id',  'id');
     }
 }
