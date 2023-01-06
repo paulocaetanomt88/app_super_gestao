@@ -29,7 +29,7 @@ class ProdutoController extends Controller
         // $itens = Item::paginate(10);
 
         // Carregamento Eager Loading
-        $itens = Item::with(['itemDetalhe'])->paginate(10);
+        $itens = Item::with(['itemDetalhe', 'fornecedor'])->paginate(10);
 
         return view('app.produto.index', ['itens' => $itens, 'request' => $request->all() ]);
     }
