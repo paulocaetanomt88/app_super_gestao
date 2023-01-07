@@ -31,16 +31,41 @@
                 <tbody class="bg-white dark:bg-slate-800">
                     @foreach ($fornecedores as $fornecedor)
                         <tr>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['nome']; }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">{{ $fornecedor['site']; }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['uf']; }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor['email']; }}</td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.editar', ['id' => $fornecedor['id']]) }}">[e]</a></td>
-                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.excluir', ['id' => $fornecedor['id']]) }}">[x]</a></td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $fornecedor->nome }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">{{ $fornecedor->site }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor->uf }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $fornecedor->email }}</td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.editar', ['id' => $fornecedor->id]) }}">[e]</a></td>
+                            <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400"><a href="{{ route('app.fornecedor.excluir', ['id' => $fornecedor->id]) }}">[x]</a></td>
                         </tr>
+                        @if ($fornecedor->produtos->count() > 0)
+                            <tr>
+                                <td colspan="6" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                                    <table class="table-auto self-auto" align="center">
+                                        <thead>
+                                            <tr>
+                                                <td colspan="6" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">Produtos de {{ $fornecedor->nome }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="3" class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">ID</th>
+                                                <th colspan="3" class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Nome do Produto</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white dark:bg-slate-800">
+                                            @foreach ($fornecedor->produtos as $produto)
+                                                <tr>
+                                                    <td colspan="3" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto->id }}</td>
+                                                    <td colspan="3" class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto->nome }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
-              </table>
+            </table>
               <br>
               <div class="row flex justify-center">
                 <div class="col-md-12">
