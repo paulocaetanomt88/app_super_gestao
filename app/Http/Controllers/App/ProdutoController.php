@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fornecedor;
 use App\Models\Item;
 use App\Models\Produto;
 use App\Models\Unidade;
@@ -30,8 +31,9 @@ class ProdutoController extends Controller
 
         // Carregamento Eager Loading
         $itens = Item::with(['itemDetalhe', 'fornecedor'])->paginate(10);
+        $fornecedores = Fornecedor::all();
 
-        return view('app.produto.index', ['itens' => $itens, 'request' => $request->all() ]);
+        return view('app.produto.index', ['itens' => $itens, 'request' => $request->all(), 'fornecedores' => $fornecedores ]);
     }
 
     /**
@@ -42,8 +44,9 @@ class ProdutoController extends Controller
     public function create()
     {
         $unidades = Unidade::all();
+        $fornecedores = Fornecedor::all();
 
-        return view('app.produto.create', ['unidades' => $unidades]);
+        return view('app.produto.create', ['unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -58,7 +61,8 @@ class ProdutoController extends Controller
             'nome' => 'required|min:3|max:40',
             'descricao' => 'required|min:3|max:2000',
             'peso' => 'required|numeric|between:0.01,9999.99',
-            'unidade_id' => 'exists:unidades,id' // precisa existir o registro na tabela e coluna indicadas.
+            'unidade_id' => 'exists:unidades,id', // precisa existir o registro na tabela e coluna indicadas.
+            'fornecedor_id' => 'exists:fornecedores,id' // precisa existir o registro na tabela fornecedores e coluna id.
         ];
 
         $feedback = [
@@ -69,7 +73,8 @@ class ProdutoController extends Controller
             'descricao.max' => 'O campo descrição deve ter no máximo 2000 caracteres.',
             'peso.numeric' => 'O campo peso precisa ser numérico.',
             'peso.between' => 'O campo peso precisa estar entre 0.01 e 9999.99.',
-            'unidade_id.exists' => 'A unidade de medida selecionada não existe'
+            'unidade_id.exists' => 'A unidade de medida selecionada não existe',
+            'fornecedor_id.exists' => 'O fornecedor selecionado não existe'
         ];
 
         $request->validate($regras, $feedback);
@@ -100,8 +105,9 @@ class ProdutoController extends Controller
     public function edit(Item $item)
     {
         $unidades = Unidade::all();
+        $fornecedores = Fornecedor::all();
 
-        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades]);
+        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -117,7 +123,8 @@ class ProdutoController extends Controller
             'nome' => 'required|min:3|max:40',
             'descricao' => 'required|min:3|max:2000',
             'peso' => 'required|numeric|between:0.01,9999.99',
-            'unidade_id' => 'exists:unidades,id' // precisa existir o registro na tabela e coluna indicadas.
+            'unidade_id' => 'exists:unidades,id', // precisa existir o registro na tabela unidades e coluna id.
+            'fornecedor_id' => 'exists:fornecedores,id' // precisa existir o registro na tabela fornecedores e coluna id.
         ];
 
         $feedback = [
@@ -128,11 +135,13 @@ class ProdutoController extends Controller
             'descricao.max' => 'O campo descrição deve ter no máximo 2000 caracteres.',
             'peso.numeric' => 'O campo peso precisa ser numérico.',
             'peso.between' => 'O campo peso precisa estar entre 0.01 e 9999.99.',
-            'unidade_id.exists' => 'A unidade de medida selecionada não existe'
+            'unidade_id.exists' => 'A unidade de medida selecionada não existe',
+            'fornecedor_id.exists' => 'O fornecedor selecionado não existe'
         ];
 
         $request->validate($regras, $feedback);
 
+        $item->fornecedor_id = $request->input('fornecedor_id');
         $item->nome = $request->input('nome');
         $item->descricao = $request->input('descricao');
         $item->peso = $request->input('peso');
@@ -144,8 +153,9 @@ class ProdutoController extends Controller
             $msg = 'Falha ao atualizar o produto!';
 
         $unidades = Unidade::all();
+        $fornecedores = Fornecedor::all();
 
-        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades, 'msg' => $msg]);
+        return view('app.produto.edit', ['item' => $item, 'unidades' => $unidades, 'msg' => $msg, 'fornecedores' => $fornecedores]);
     }
 
     /**

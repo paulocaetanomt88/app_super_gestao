@@ -7,7 +7,15 @@
     @csrf
 @endif
 
-    <input type="hidden" name="id" value="{{ $item->id ?? '' }}">
+    <select name="fornecedor_id" class="borda-preta">
+        <option value="0">-- Selecione o fornecedor --</option>
+        
+        @foreach ($fornecedores as $fornecedor)
+            <option value="{{ $fornecedor->id }}" {{ ($item->fornecedor_id ?? old('fornecedor_id')) == $fornecedor->id ? 'selected' : '' }}>{{$fornecedor->nome}} - {{$fornecedor->uf}}</option>
+        @endforeach
+    </select>
+    {{ $errors->has('fornecedor_id') ? $errors->first('fornecedor_id') : '' }}
+
     <input type="text" name="nome" value="{{ $item->nome ?? old('nome') }}" placeholder="Nome" class="borda-preta" />
     {{ $errors->has('nome') ? $errors->first('nome') : '' }}
 
