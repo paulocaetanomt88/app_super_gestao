@@ -14,6 +14,8 @@ use App\Http\Controllers\App\FornecedorController;
 use App\Http\Controllers\App\ProdutoController;
 use App\Http\Controllers\App\ProdutoDetalheController;
 use App\Http\Controllers\App\ClienteController;
+use App\Http\Controllers\App\PedidoController;
+use App\Http\Controllers\App\PedidoProdutoController;
 use App\Http\Middleware\LogAcessoMiddleware;
 
 /*
@@ -54,8 +56,6 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         Route::get('/home', [HomeController::class, 'index'])->name('app.home');
         Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
         
-        Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
-        
         Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
         Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
         Route::post('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
@@ -67,14 +67,17 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
 
         // Devido o ProdutoController ter sido criado especificando a --model=Produto, o Laravel definiu o parametro para 'produto'
         // que ao decorrer do desenvolvimento do projeto do curso foi modificado para 'item'
-        
         Route::resource('/produto', ProdutoController::class)->parameters(['produto' => 'item']);
         
-        //Route::resource('/produto-detalhe', ProdutoDetalheController::class)->parameters(['produto_detalhe' => 'item_detalhe']);
+        //rota desativada: Route::resource('/produto-detalhe', ProdutoDetalheController::class)->parameters(['produto_detalhe' => 'item_detalhe']);
         
         // Foi necessário desativar a rota /produto-detalhe para usar o parâmetro item_detalhe recebendo o objeto ItemDetalhe $itemDetalhe na ProdutoDetalheController
         Route::resource('/item-detalhe', ProdutoDetalheController::class);
-        
+
+        // Os Controllers dessas models abaixo foram criados especificando as respectivas models ex: 'php artisan make:controller PedidoController --model=Pedido'
+        Route::resource('/cliente', ClienteController::class);
+        Route::resource('/pedido', PedidoController::class);
+        Route::resource('/pedido-produto', PedidoProdutoController::class);
     });
 
 Route::fallback(function() {
