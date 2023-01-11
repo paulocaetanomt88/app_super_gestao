@@ -19,7 +19,6 @@
             <div style="width: 30%; margin-left: auto; margin-right: auto;">
                 @component('app.produto._components.form_create_edit', ['item' => $item, 'unidades' => $unidades, 'fornecedores' => $fornecedores])
                 @endcomponent
-                <p class="mt-4">{{ $msg ?? ''}}</p>
             </div>
         </div>
         @if (isset($msg) && $msg!='')
