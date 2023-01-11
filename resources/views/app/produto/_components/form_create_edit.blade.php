@@ -43,4 +43,3 @@
         @endif
     </button>
 </form>
-{{ $msg ?? ''}}
