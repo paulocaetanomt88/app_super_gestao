@@ -1,6 +1,6 @@
 @extends('app.layouts.basico')
 
-@section('titulo', 'Produto')
+@section('titulo', 'Produtos')
     
 @section('estilos')
     <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
