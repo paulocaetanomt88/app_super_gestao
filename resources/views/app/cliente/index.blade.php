@@ -1,6 +1,6 @@
 @extends('app.layouts.basico')
 
-@section('titulo', 'Produto')
+@section('titulo', 'Clientes')
     
 @section('estilos')
     <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -28,6 +28,7 @@
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Telefone</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">E-mail</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Endereço</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Visualizar</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Editar</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Excluir</th>
                   </tr>
@@ -94,7 +95,7 @@
                     <br>
                     Número do último registro desta página na relação do resultado da busca: {{ $fornecedores->lastItem() }}
                     --}}
-                    Exibindo {{ $clientes->count() }} produtos de {{ $clientes->total() }} (de {{ $clientes->firstItem() }} a {{ $clientes->lastItem() }} )
+                    Exibindo {{ $clientes->count() }} clientes de {{ $clientes->total() }} (de {{ $clientes->firstItem() }} a {{ $clientes->lastItem() }} )
                 </div>
             </div>
             
