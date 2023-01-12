@@ -80,6 +80,7 @@ class ProdutoController extends Controller
         $request->validate($regras, $feedback);
 
         Item::create($request->all());
+        
         return redirect()->route('produto.index');
     }
 
