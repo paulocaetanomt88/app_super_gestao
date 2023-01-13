@@ -3,34 +3,178 @@
 
 
 ## App Super Gestão
-#### Projeto em desenvolvimento como parte do estudo do curso de Desenvolvimento Web Avançado 2022 com PHP, Laravel e Vue.JS
+#### Projeto é parte do estudo do curso de Desenvolvimento Web Avançado 2022 com PHP, Laravel e Vue.JS
 
 O objetivo deste estudo é compreender e praticar conceitos do Desenvolvimento web com Laravel utilizando boas práticas
 
-### Conceitos abordados neste estudo até o momento:
 
-Configurar o ambiente de desenvolvimento nos sistemas operacionais Windows, Linux Ubuntu e OSX.
+### Conceitos abordados neste projeto:
 
-Trabalhar com rotas, grupos e com os verbos HTTP Get, Post, Delete, Put e Patch.
+#### Configurar o ambiente de desenvolvimento nos sistemas operacionais Windows, Linux Ubuntu e OSX.
+Ferramentas e tecnologias utilizadas:
+Servidor: Laragon
+Banco de dados: MySQL
+IDE de desenvolvimento: Microsoft VS Code
+SGBD: HeidiSQL Portable
 
-Trabalhar com o motor de renderização de views Blade
+#### Trabalhar com rotas, grupos e com os verbos HTTP Get, Post, Delete, Put e Patch.
+<p>O método Route::resource é um controlador RESTful que gera todas as rotas básicas necessárias para um aplicativo e pode ser facilmente manipulado usando a classe do controlador.</p>
+```
+   // controlador RESTful
+   Route::resource('/pedido-produto', PedidoProdutoController::class);
+        
+   // rotas personalizadas
+   Route::get('/pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+   Route::post('/pedido-produto/store/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
+   Route::delete('pedido-produto.destroy/{pedido}/{produto}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
+```
 
-Trabalhar com o desenvolvimento incremental de bancos de dados relacionais utilizando Migrations
+#### Trabalhar com o motor de renderização de views Blade
+```
+basico.blade.php
+<body>
+        @include('app.layouts._partials.topo')
+        @yield('conteudo')
+</body>
+```
 
-Criar Seeders e Factories para popular tabelas
+create.blade.php de Produto
+```
+    @extends('app.layouts.basico')
 
-Trabalhar com o console Tinker
+    @section('titulo', 'Adicionar Produto')
 
-Como manipular e validar formulários
+    @section('conteudo')
+    
+    @component('app.produto._components.form_create_edit', ['unidades' => $unidades, 'fornecedores' => $fornecedores])
+    @endcomponent
+```
 
-Como interceptar requisições e respostas utilizando Middlewares
+#### Trabalhar com o desenvolvimento incremental de bancos de dados relacionais utilizando Migrations
+Trecho da migration que cria a tabela Clientes e Pedidos no banco de dados com suas respectivas relações.
+```
+Schema::create('clientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome', 50);
+            $table->string('telefone', 16);
+            $table->string('email', 200);
+            $table->string('endereco',255);
+            $table->timestamps();
+        });
 
-Como lidar com o padrão de arquitetura MVC (Model, View e Controller)
+        Schema::create('pedidos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('cliente_id');
+            $table->timestamps();
 
-Como implementar as operações CRUD utilizando o Eloquent ORM
+            $table->foreign('cliente_id')->references('id')->on('clientes');
+        });
+```
 
-[...]
+#### Criar Seeders e Factories para popular tabelas
+SiteContatoFactory.php
+```
+protected $model = SiteContato::class;
 
+    public function definition()
+    {
+        return [
+            'nome' => $this->faker->name(),
+            'telefone' => $this->faker->phoneNumber(),
+            'email' => $this->faker->unique()->email(),
+            'motivo_contatos_id' => $this->faker->numberBetween(1,3),
+            'mensagem' => $this->faker->text(200)
+        ];
+    }
+```
 
-#### Em construção...
-<img width="45" alt="schermafbeelding 2017-09-27 om 23 08 12" src="https://user-images.githubusercontent.com/7254997/30937972-c9632d04-a3d8-11e7-87f3-c44ce2b86d24.png">
+SiteContatoSeeder.php
+```
+public function run()
+    {
+
+        /*
+        $contato = new SiteContato();
+        $contato->nome = 'Sistema SG';
+        $contato->telefone = '(11) 99999-8888';
+        $contato->email = 'contato@sg.com.br';
+        $contato->motivo_contato = 1;
+        $contato->mensagem = 'Seja bem-vindo ao sistema Super Gestão';
+        $contato->save();
+        */
+
+        SiteContato::factory(5)->create();
+    }
+```
+
+#### Trabalhar com o console Tinker
+```
+    >>> use App\Models\Cliente;
+    >>> Cliente::create(['nome'=>'Paulo', 'telefone'=>'(65) 99248-1775', 'email'=>'paulocaetanomt88@gmail.com', 'endereco'=>'Rua A, Casa B, Quadra C']);
+    
+    => App\Models\Cliente {#4572
+     nome: "Paulo",
+     telefone: "(65) 99248-1775",
+     email: "paulocaetanomt88@gmail.com",
+     endereco: "Rua A, Casa B, Quadra C",
+     updated_at: "2023-01-13 22:59:02",
+     created_at: "2023-01-13 22:59:02",
+     id: 6,
+   }
+```
+
+#### Como manipular e validar formulários
+O Laravel usa a tag @csrf em todos os formulários (views) para gerar um token que é exigido nos controllers (backend) para validação de segurança
+Mesmo usando o método POST na tag <form>, é possível definir o método que será enviado para a rota, como: PUT, PATCH e DELETE, através da tag @method[]
+A validação dos formulários pode ser feita pelo método validate() do objeto $request enviado via POST
+
+#### Como interceptar requisições e respostas utilizando Middlewares
+```
+	$ip = $_SERVER['REMOTE_ADDR'];
+        $rota = $request->server->get('REQUEST_URI');
+
+        // Registrando o logo de acesso no banco de dados
+        LogAcesso::create(['log' => 'IP: '.$ip.' requisitou a rota '.$rota]);
+```
+
+#### Como lidar com o padrão de arquitetura MVC (Model, View e Controller)
+Exemplo de MVC para Cliente
+#### Model:
+Classe que mapeia a tabela de clientes no banco de dados:
+App/Models/Cliente.php
+
+#### View:
+Formulário para listar clientes:
+resource/views/app/cliente/index.blade.php
+
+Formulário para cadastrar clientes:
+resource/views/app/cliente/create.blade.php
+
+Formulário para editar um cliente específico:
+resource/views/app/cliente/edit.blade.php
+
+Formulário para exibir um cliente específico:
+resource/views/app/cliente/show.blade.php
+
+#### Controller:
+camada com funções que conectam as views com a camada da model:
+App/Http/Controllers/ClienteController.php
+
+#### Como implementar as operações CRUD utilizando o Eloquent ORM
+exemplos de operações de CRUD com ORM:
+```
+	SELECT de todos os Clientes com paginação
+	$clientes = Cliente::paginate();
+
+	Cria uma nova instância de Cliente
+	$cliente = new Cliente();
+
+	Cria um registro no banco de dados recebendo os dados vindos do $request
+	$cliente->create($request->all());
+
+	Atualiza um registro no banco de dados recebendo os dados vindos do $request
+	$cliente->update($request->all());
+
+	Deleta no banco de dados o registro vinculado a instância de cliente atual
+	$cliente->delete();
+```
