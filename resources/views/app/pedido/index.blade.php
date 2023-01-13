@@ -26,6 +26,7 @@
                   <tr>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">ID do Pedido</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Cliente</th>
+                    <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left"></th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Visualizar</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Editar</th>
                     <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Excluir</th>
@@ -38,6 +39,10 @@
                             <tr>
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $pedido->id }}</td>
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $pedido->cliente->nome }}</td>
+
+                                <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
+                                    <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('pedido-produto.create', [ 'pedido' => $pedido->id ]) }}">Adicionar Produtos</a>
+                                </td>
 
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 ">
                                     <a class="btn btn-xs btn-info btn-flat  btn-sm" href="{{ route('pedido.show', [ 'pedido' => $pedido->id ]) }}">Ver</a>
