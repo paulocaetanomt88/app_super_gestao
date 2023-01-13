@@ -45,6 +45,7 @@
                             <th class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">Nome do produto</th>
                             <th class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">Quantidade</th>
                             <th class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">Data de inclusão do item no pedido</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,14 @@
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto->nome; }}</td>
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto->pivot->quantidade; }}</td>
                                 <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">{{ $produto->pivot->created_at->format('d/m/Y H:i:s'); }}</td>
+                                <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                                    <form id="form_{{$produto->pivot->id}}" method="POST" action="{{ route('pedido-produto.destroy', ['pedido'=>$pedido->id, 'produto'=>$produto->id]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input name="id_pedido_produto" type="hidden" value="{{$produto->pivot->id}}" />
+                                    <a href="#" onclick="document.getElementById('form_{{$produto->pivot->id}}').submit()"> Excluir </a>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

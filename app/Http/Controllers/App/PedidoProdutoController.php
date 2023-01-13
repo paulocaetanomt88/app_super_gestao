@@ -88,17 +88,11 @@ class PedidoProdutoController extends Controller
         */
 
         // Dessa mesma forma, podemos inserir vários registros passando um array para a função attach()
-        $insere = $pedido->produtos()->attach([
-            $request->get('produto_id') => ['quantidade' => $request->get('quantidade')],
-            // $request->get('produto_id') => ['quantidade' => $request->get('quantidade')],
-            // ...
+        $pedido->produtos()->attach([
+            $request->get('produto_id') => ['quantidade' => $request->get('quantidade')]
         ]);
 
-        if($insere) {
-            $msg = 'Produto '. $produto[0]->nome .' foi incluído no pedido com sucesso.';
-        } else {
-            $msg = 'O produto '. $produto[0]->nome .' <b>não foi incluído</b> no pedido.';
-        }
+        $msg = 'Produto '. $produto[0]->nome .' foi incluído no pedido com sucesso.';
 
         return view('app.pedido_produto.create',['pedido'=>$pedido, 'produtos' => $produtos, 'msg'=>$msg]);
     }
@@ -143,8 +137,33 @@ class PedidoProdutoController extends Controller
      * @param  \App\Models\PedidoProduto  $pedidoProduto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PedidoProduto $pedidoProduto)
+    public function destroy(Pedido $pedido, Produto $produto, Request $request)
     {
-        //
+        // Método convencional
+        /*
+        PedidoProduto::where([
+            'pedido_id' => $pedido->id,
+            'produto_id' => $produto->id,
+        ])->delete();
+        */
+
+        // Método detach
+        // $pedido->produtos()->detach($produto->id);
+        
+        // relação de produtos para enviar à view
+        $produtos = Produto::all();
+
+        $pedido_produto = PedidoProduto::where('id',$request->id_pedido_produto);
+
+        // Excluindo pela PK de pedidos_produtos
+        $exclui = $pedido_produto->delete();
+
+       if($exclui) {
+        $msg = 'Produto '. $produto->nome .' foi removido do pedido.';
+    } else {
+        $msg = 'O produto '. $produto->nome .' <b>não foi removido</b> do pedido.';
+    }
+
+        return view('app.pedido_produto.create',['pedido'=>$pedido, 'produtos' => $produtos, 'msg'=>$msg]);
     }
 }

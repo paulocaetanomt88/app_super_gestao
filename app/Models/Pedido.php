@@ -27,6 +27,6 @@ class Pedido extends Model
             3 - Nome da Chave Extrangeira (FK) da tabela mapeada pelo model na tabela de relacionamento
             4 - Nome da Chave Extrangeira (FK) da tabela mapeada pelo model utilizado no relacionamento que estamos implementando
         */
-        return $this->belongsToMany(Item::class, 'pedidos_produtos', 'pedido_id', 'produto_id')->withPivot('created_at','quantidade');
+        return $this->belongsToMany(Item::class, 'pedidos_produtos', 'pedido_id', 'produto_id')->withPivot('id', 'created_at','quantidade');
     }
 }
