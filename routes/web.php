@@ -77,7 +77,10 @@ Route::middleware('autenticacao:padrao,visitante,p3,p4')
         // Os Controllers dessas models abaixo foram criados especificando as respectivas models ex: 'php artisan make:controller PedidoController --model=Pedido'
         Route::resource('/cliente', ClienteController::class);
         Route::resource('/pedido', PedidoController::class);
-        Route::resource('/pedido-produto', PedidoProdutoController::class);
+        
+        //Route::resource('/pedido-produto', PedidoProdutoController::class);
+        Route::get('/pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+        Route::post('/pedido-produto/store/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
     });
 
 Route::fallback(function() {
