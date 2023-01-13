@@ -178,3 +178,12 @@ exemplos de operações de CRUD com ORM:
 	Deleta no banco de dados o registro vinculado a instância de cliente atual
 	$cliente->delete();
 ```
+### Conclusão
+<p>O Laravel é um excelente framework que contém estruturas, configurações e funções completas e flexíveis para o desenvolvimento web. Desta forma, facilita e agiliza muito o trabalho de um desenvolvedor, web seja Frontend ou Backend.</p>
+<p>Iniciando pelas camadas visíveis ao usuário final (as Views), neste projeto, pude implementar facilmente o Tailwind CSS para estilizar as telas e aplicar paginação nos conjuntos de dados que podem ser extensos dependendo do banco de dados.</p>
+<p>Quando desenvolvi o backend na camada de dados, com as migrations pude controlar o que fazer e desfazer de alterações nas tabelas do banco sem necessidade de preocupar com a sintaxe do SGBD escolhido (MySQL). Nas models defini quais campos podem ser preenchidos em massa, métodos de relacionamento entre as tabelas e mapear tabela diferente da convenção de nomes.</p>
+<p>Com os Controllers pude desenvolver de forma organizada e prática, com orientação a objetos, os métodos de processamento, validação, inserção e recuperação de dados.</p>
+
+ ### Considerações finais
+<p>O conteúdo do curso é apresentado usando a versão 7, mas para aprender já com as funções modernas do framework optei por fazer com a versão 9 do Laravel, pesquisando e adaptando sempre que necessário.</p>
+<p>Algumas funcionalidades de views complementares ficaram por fazer, mas o objetivo deste estudo era conhecer e desenvolver as principais funcionalidades do Laravel.</p>
